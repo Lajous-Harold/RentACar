@@ -23,14 +23,14 @@ public class CarController {
     }
 
     @GetMapping("/{plateNumber}")
-    public ResponseEntity<Car> getCar(@PathVariable String plateNumber) {
+    public ResponseEntity<Car> getCar(@PathVariable("plateNumber") String plateNumber) {
         return carService.getCarByPlate(plateNumber)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PutMapping("/{plateNumber}")
-    public ResponseEntity<String> rentOrReturnCar(@PathVariable String plateNumber, @RequestParam boolean rent) {
+    public ResponseEntity<String> rentOrReturnCar(@PathVariable("plateNumber") String plateNumber, @RequestParam("rent") boolean rent) {
         boolean success = rent ? carService.rentCar(plateNumber) : carService.returnCar(plateNumber);
         if (success) {
             return ResponseEntity.ok("Car " + (rent ? "rented" : "returned") + " successfully.");

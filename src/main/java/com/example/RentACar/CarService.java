@@ -21,6 +21,7 @@ public class CarService {
     }
 
     public Optional<Car> getCarByPlate(String plateNumber) {
+        System.out.println("🔍 Recherche de la voiture avec plaque : " + plateNumber);
         return cars.stream().filter(car -> car.getPlateNumber().equals(plateNumber)).findFirst();
     }
 
