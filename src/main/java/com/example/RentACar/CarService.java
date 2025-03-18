@@ -11,10 +11,9 @@ public class CarService {
     private final List<Car> cars = new ArrayList<>();
 
     public CarService() {
-        // Initialize some cars
-        cars.add(new Car("11AA22", "Ferrari", 100));
-        cars.add(new Car("33BB44", "Toyota", 50));
-        cars.add(new Car("55CC66", "BMW", 80));
+        cars.add(new Car("11AA22", "Ferrari", 145000));
+        cars.add(new Car("33BB44", "Toyota", 12000));
+        cars.add(new Car("55CC66", "BMW", 42000));
     }
 
     public List<Car> getAvailableCars() {
