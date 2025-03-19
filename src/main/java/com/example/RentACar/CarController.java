@@ -29,12 +29,21 @@ public class CarController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PutMapping("/{plateNumber}")
-    public ResponseEntity<String> rentOrReturnCar(@PathVariable("plateNumber") String plateNumber, @RequestParam("rent") boolean rent) {
-        boolean success = rent ? carService.rentCar(plateNumber) : carService.returnCar(plateNumber);
-        if (success) {
-            return ResponseEntity.ok("Car " + (rent ? "rented" : "returned") + " successfully.");
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Action not possible. Car may already be rented or not found.");
+    @PutMapping("/{plateNumber}")  
+    public ResponseEntity<String> rentOrReturnCar(
+        @PathVariable("plateNumber") String plateNumber, 
+        @RequestParam("rent") boolean rent) {
+
+    if (carService.getCarByPlate(plateNumber).isEmpty()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found.");
     }
+
+    boolean success = rent ? carService.rentCar(plateNumber) : carService.returnCar(plateNumber);
+    if (success) {
+        return ResponseEntity.ok("Car " + (rent ? "rented" : "returned") + " successfully.");
+    }
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Action not possible. Car may already be rented or not found.");
+}
+
 }
